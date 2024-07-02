@@ -1,10 +1,9 @@
 package repository
 
 import (
+	"backend-app/models"
 	"database/sql"
 	"log"
-
-	"github.com/azme12/backend-app/models"
 )
 
 type CategoryRepository struct {

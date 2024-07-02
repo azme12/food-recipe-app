@@ -4,9 +4,8 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/azme12/backend-app/models"
+	"backend-app/models"
 )
-
 type RecipeRepository struct {
 	DB *sql.DB
 }

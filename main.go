@@ -9,10 +9,9 @@ import (
 
     "github.com/gorilla/mux"
     _ "github.com/lib/pq" // PostgreSQL driver
-    "github.com/azme12/backend-app/controllers"
-    "github.com/azme12/backend-app/routes/repository"
-    "github.com/azme12/backend-app/routes"
-    "github.com/azme12/backend-app/middleware" 
+    "backend-app/controllers"
+    "backend-app/repository"
+    "backend-app/routes"
 )
 
 // Config represents the application configuration structure

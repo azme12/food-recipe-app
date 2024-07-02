@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/azme12/backend-app/models"
-	"github.com/azme12/backend-app/repository"
+	"backend-app/models"
+	"backend-app/repository"
 )
 
 type CategoryController struct {
@@ -23,31 +23,32 @@ func NewCategoryController(categoryRepo *repository.CategoryRepository) *Categor
 
 // CreateCategory creates a new recipe category
 func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Request) {
-	var newCategory models.Category
-	err := json.NewDecoder(r.Body).Decode(&newCategory)
-	if err != nil {
-		http.Error(w, "Failed to decode request body", http.StatusBadRequest)
-		return
-	}
+    var newCategory models.Category
+    err := json.NewDecoder(r.Body).Decode(&newCategory)
+    if err != nil {
+        http.Error(w, "Failed to decode request body", http.StatusBadRequest)
+        return
+    }
 
-	// Validate input
-	if newCategory.Name == "" {
-		http.Error(w, "Category name is required", http.StatusBadRequest)
-		return
-	}
+    // Validate input
+    if newCategory.Name == "" {
+        http.Error(w, "Category name is required", http.StatusBadRequest)
+        return
+    }
 
-	// TODO: Implement logic to create a new category in the database
-	createdCategory, err := cc.CategoryRepository.CreateCategory(&newCategory)
-	if err != nil {
-		log.Println("Error creating category:", err)
-		http.Error(w, "Failed to create category", http.StatusInternalServerError)
-		return
-	}
+
+	// Create the category in the database
+	err = cc.CategoryRepository.CreateCategory(&newCategory)
+    if err != nil {
+        log.Println("Error creating category:", err)
+        http.Error(w, "Failed to create category", http.StatusInternalServerError)
+        return
+    }
 
 	// Return success response with the created category
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(createdCategory)
+    w.WriteHeader(http.StatusCreated)
+    json.NewEncoder(w).Encode(newCategory) // Adjust based on how you handle the created category
 }
 
 // UpdateCategory updates an existing recipe category
@@ -65,7 +66,7 @@ func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	// TODO: Implement logic to update the category in the database
+	// Update the category in the database
 	err = cc.CategoryRepository.UpdateCategory(&updatedCategory)
 	if err != nil {
 		log.Println("Error updating category:", err)
@@ -92,7 +93,7 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	// TODO: Implement logic to delete the category from the database
+	// Delete the category from the database
 	err = cc.CategoryRepository.DeleteCategory(categoryID)
 	if err != nil {
 		log.Println("Error deleting category:", err)
@@ -107,7 +108,7 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 
 // GetAllCategories retrieves all recipe categories
 func (cc *CategoryController) GetAllCategories(w http.ResponseWriter, r *http.Request) {
-	// TODO: Implement logic to retrieve all categories from the database
+	// Retrieve all categories from the database
 	categories, err := cc.CategoryRepository.GetAllCategories()
 	if err != nil {
 		log.Println("Error retrieving categories:", err)

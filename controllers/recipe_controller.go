@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"food-recipe-site-backend/models"
-	"food-recipe-site-backend/repository"
+	"backend-app/models"
+	"backend-app/repository"
 )
 
 type RecipeController struct {
